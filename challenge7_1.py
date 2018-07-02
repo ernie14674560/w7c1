@@ -13,8 +13,9 @@ def co2():
     df_data = df_data.loc[df_data['Series code'] == 'EN.ATM.CO2E.KT'].replace(
         {'..': np.nan}).drop('Series code', 1)  # 選擇co2data，並將表中的".."替換成NaN，刪除"Series code" col
     df_data = df_data.fillna(method='ffill', axis=1).fillna(method='bfill', axis=1)  # 填NaN數據
+    df_data.dropna(how='all', inplace=True)
     df_data['total'] = df_data.values[:, 1:].sum(1)  # 以國為單位將排放加總
-    df_data = df_data[pd.notnull(df_data['total'])]  # 去除掉 total 為NaN 的國家
+    #df_data = df_data[pd.notnull(df_data['total'])]  # 去除掉 total 為NaN 的國家
     for index, col in df_data.iterrows():
         df_data.loc[index, 'Income group'] = dict_country[index]  # 為每個國家加上 "Income group" value
     income_group = df_data.groupby('Income group')  # 用Income group 為每個國家排序
