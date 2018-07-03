@@ -62,4 +62,4 @@ def co2():
 
 
 if __name__ == '__main__':
-    print(co2())
+    timeit.timeit('print(co2())', 'from __main__ import co2', number=1)
