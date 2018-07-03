@@ -8,7 +8,7 @@ def data_clean():
     data = pd.read_excel("ClimateChange.xlsx", sheetname='Data')
 
     # 处理 data 数据表 # 选取 EN.ATM.CO2E.KT 数据，并将国家代码设置为索引
-    data = data[data['Series code']== 'EN.ATM.CO2E.KT'].set_index('Country code')
+    data = data[data['Series code'] == 'EN.ATM.CO2E.KT'].set_index('Country code')
     # 剔除不必要的数据列
     data.drop(labels=['Country name', 'Series code', 'Series name', 'SCALE', 'Decimals'], axis=1, inplace=True)
     # 将原数据集中不规范的空值替换为 NaN 方便填充
@@ -22,7 +22,7 @@ def data_clean():
 
     # 处理 Country 数据表
     # 将国家代码设置为索引
-    countries =  pd.read_excel("ClimateChange.xlsx", sheetname='Country')
+    countries = pd.read_excel("ClimateChange.xlsx", sheetname='Country')
     countries.set_index('Country code', inplace=True)
     # 剔除不必要的数据列
     countries.drop(labels=['Capital city', 'Region', 'Lending category'], axis=1, inplace=True)
@@ -31,6 +31,7 @@ def data_clean():
     # 对 Data 和 Country 表按照索引进行合并
     return pd.concat([data, countries], axis=1)
     # return pd.merge(pd.DataFrame(data), countries, left_index=True, right_index=True)
+
 
 def co2():
     '''co2() 函数用于数据统计，大致步骤如下：
@@ -45,7 +46,8 @@ def co2():
 
     # ERROR: df_max = df.max()
 
-    df_max = df.sort_values(by='Sum emissions', ascending=False).groupby('Income group').head(1).set_index('Income group')
+    df_max = df.sort_values(by='Sum emissions', ascending=False).groupby('Income group').head(1).set_index(
+        'Income group')
     df_max.columns = ['Highest emissions', 'Highest emission country']
     df_max = df_max.reindex(columns=['Highest emission country', 'Highest emissions'])
 
@@ -57,3 +59,7 @@ def co2():
     result = pd.concat([df_sum, df_max, df_min], axis=1)
 
     return result
+
+
+if __name__ == '__main__':
+    print(co2())

@@ -29,4 +29,4 @@ def co2():
 
 
 if __name__ == '__main__':
-    co2()
+    print(co2())
