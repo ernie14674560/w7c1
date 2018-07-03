@@ -2,7 +2,7 @@
 # _*_ coding:utf-8 _*_
 
 import pandas as pd
-
+import timeit
 
 def data_clean():
     data = pd.read_excel("ClimateChange.xlsx", sheetname='Data')
